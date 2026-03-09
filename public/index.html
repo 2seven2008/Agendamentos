@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1a2235" />
+    <meta
+      name="description"
+      content="Sistema de agendamento para psicopedagogia"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Agendamento" />
+
+    <title>Agendamento · Psicopedagogia</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Lora:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- App Styles -->
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <!-- ══════════════ MOBILE TOPBAR (tablet) ══════════════ -->
+    <div class="mobile-topbar" id="mobile-topbar">
+      <div class="sidebar-brand">
+        <div
+          style="
+            font-size: 0.75rem;
+            color: #8fa3c0;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+        >
+          Sistema de
+        </div>
+        Agendamento
+      </div>
+      <button class="hamburger-btn" onclick="toggleDrawer()">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+
+    <!-- ══════════════ MOBILE DRAWER ══════════════ -->
+    <div
+      class="mobile-overlay"
+      id="mobile-overlay"
+      onclick="toggleDrawer()"
+    ></div>
+    <nav class="mobile-drawer" id="mobile-drawer">
+      <div class="sidebar-brand">
+        <div
+          style="
+            font-size: 0.72rem;
+            color: #8fa3c0;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+          "
+        >
+          Sistema de
+        </div>
+        Agendamento
+        <div style="font-size: 0.72rem; color: #8fa3c0; margin-top: 4px">
+          Psicopedagogia
+        </div>
+      </div>
+      <a
+        href="#"
+        id="mob-nav-dashboard"
+        onclick="
+          mostrarPagina('dashboard');
+          toggleDrawer();
+        "
+      >
+        <i class="bi bi-grid-1x2"></i> Dashboard
+      </a>
+      <a
+        href="#"
+        id="mob-nav-pacientes"
+        onclick="
+          mostrarPagina('pacientes');
+          toggleDrawer();
+        "
+      >
+        <i class="bi bi-people"></i> Pacientes
+      </a>
+      <a
+        href="#"
+        id="mob-nav-agendamentos"
+        onclick="
+          mostrarPagina('agendamentos');
+          toggleDrawer();
+        "
+      >
+        <i class="bi bi-calendar3"></i> Agendamentos
+      </a>
+      <a
+        href="#"
+        id="mob-nav-sessoes"
+        onclick="
+          mostrarPagina('sessoes');
+          toggleDrawer();
+        "
+      >
+        <i class="bi bi-clipboard-heart"></i> Sessões
+      </a>
+    </nav>
+
+    <!-- ══════════════ LAYOUT PRINCIPAL ══════════════ -->
+    <div class="d-flex">
+      <!-- Sidebar desktop -->
+      <aside class="sidebar" style="width: 220px; flex-shrink: 0">
+        <div class="sidebar-brand">
+          <div
+            style="
+              font-size: 0.72rem;
+              color: #8fa3c0;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              margin-bottom: 2px;
+            "
+          >
+            Sistema de
+          </div>
+          Agendamento
+          <div style="font-size: 0.72rem; color: #8fa3c0; margin-top: 4px">
+            Psicopedagogia
+          </div>
+        </div>
+        <nav>
+          <a
+            href="#"
+            id="nav-dashboard"
+            class="ativo"
+            onclick="mostrarPagina('dashboard')"
+          >
+            <i class="bi bi-grid-1x2"></i> Dashboard
+          </a>
+          <a href="#" id="nav-pacientes" onclick="mostrarPagina('pacientes')">
+            <i class="bi bi-people"></i> Pacientes
+          </a>
+          <a
+            href="#"
+            id="nav-agendamentos"
+            onclick="mostrarPagina('agendamentos')"
+          >
+            <i class="bi bi-calendar3"></i> Agendamentos
+          </a>
+          <a href="#" id="nav-sessoes" onclick="mostrarPagina('sessoes')">
+            <i class="bi bi-clipboard-heart"></i> Sessões
+          </a>
+        </nav>
+
+        <!-- PWA install button -->
+        <div
+          style="
+            position: absolute;
+            bottom: 24px;
+            left: 16px;
+            right: 16px;
+            display: none;
+          "
+          id="pwa-install-sidebar"
+        >
+          <button
+            class="btn btn-sm w-100"
+            style="
+              background: rgba(255, 255, 255, 0.08);
+              color: #8fa3c0;
+              border: 1px solid rgba(255, 255, 255, 0.12);
+              font-size: 0.78rem;
+            "
+            onclick="installPWA()"
+          >
+            <i class="bi bi-download me-1"></i> Instalar App
+          </button>
+        </div>
+      </aside>
+
+      <!-- Conteúdo principal -->
+      <main class="main-content flex-grow-1" style="min-width: 0">
+        <!-- ══ DASHBOARD ══ -->
+        <section class="pagina" id="pagina-dashboard">
+          <div
+            class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+          >
+            <h3 class="mb-0">
+              <i class="bi bi-grid-1x2 me-2" style="color: var(--accent)"></i
+              >Dashboard
+            </h3>
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="abrirModalNovoAgendamento()"
+            >
+              <i class="bi bi-plus-lg me-1"></i> Nova Consulta
+            </button>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3">
+              <div class="stat-card">
+                <h6>Hoje</h6>
+                <h2 id="stat-hoje">—</h2>
+                <div style="font-size: 0.78rem; color: var(--text-muted)">
+                  consultas
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="stat-card">
+                <h6>Confirmadas</h6>
+                <h2 id="stat-confirmadas" style="color: var(--success)">—</h2>
+                <div style="font-size: 0.78rem; color: var(--text-muted)">
+                  no total
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="stat-card">
+                <h6>Pendentes</h6>
+                <h2 id="stat-pendentes" style="color: var(--warning)">—</h2>
+                <div style="font-size: 0.78rem; color: var(--text-muted)">
+                  aguardando
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="stat-card">
+                <h6>Canceladas</h6>
+                <h2 id="stat-canceladas" style="color: var(--danger)">—</h2>
+                <div style="font-size: 0.78rem; color: var(--text-muted)">
+                  no total
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendário + Painel -->
+          <div class="row g-3">
+            <div class="col-12 col-md-6 col-xl-5">
+              <div class="calendar-wrapper">
+                <div class="cal-header">
+                  <button class="cal-nav-btn" onclick="mudarMes(-1)">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <h6 id="cal-titulo"></h6>
+                  <button class="cal-nav-btn" onclick="mudarMes(1)">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="cal-grid">
+                  <div class="cal-weekdays">
+                    <div class="cal-weekday">Dom</div>
+                    <div class="cal-weekday">Seg</div>
+                    <div class="cal-weekday">Ter</div>
+                    <div class="cal-weekday">Qua</div>
+                    <div class="cal-weekday">Qui</div>
+                    <div class="cal-weekday">Sex</div>
+                    <div class="cal-weekday">Sáb</div>
+                  </div>
+                  <div class="cal-days" id="cal-days"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-7">
+              <div class="cal-side-panel">
+                <div class="cal-side-header">
+                  <h6 id="cal-dia-titulo">Próximas Consultas</h6>
+                  <span
+                    class="cal-dia-badge"
+                    id="cal-dia-badge"
+                    style="display: none"
+                  ></span>
+                </div>
+                <div class="cal-side-body" id="cal-dia-consultas">
+                  <p
+                    class="text-muted"
+                    style="font-style: italic; font-size: 0.88rem"
+                  >
+                    Carregando...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ PACIENTES ══ -->
+        <section class="pagina" id="pagina-pacientes" style="display: none">
+          <div
+            class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+          >
+            <h3 class="mb-0">
+              <i class="bi bi-people me-2" style="color: var(--accent)"></i
+              >Pacientes
+            </h3>
+            <button
+              class="btn btn-primary btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#modalPaciente"
+            >
+              <i class="bi bi-person-plus me-1"></i> Novo Paciente
+            </button>
+          </div>
+
+          <div class="row g-3">
+            <!-- Lista -->
+            <div class="col-12 col-lg-4">
+              <div class="card p-3">
+                <div class="mb-3 position-relative">
+                  <i
+                    class="bi bi-search position-absolute"
+                    style="
+                      top: 50%;
+                      left: 12px;
+                      transform: translateY(-50%);
+                      color: var(--text-muted);
+                    "
+                  ></i>
+                  <input
+                    type="text"
+                    class="form-control ps-4"
+                    id="busca-paciente"
+                    placeholder="  Buscar paciente..."
+                    oninput="atualizarListaPacientes()"
+                  />
+                </div>
+                <ul class="list-group list-group-flush" id="listaPacientes">
+                  <li
+                    class="list-group-item text-muted"
+                    style="font-style: italic"
+                  >
+                    Carregando...
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- Detalhes -->
+            <div class="col-12 col-lg-8">
+              <div class="card p-4" id="card-info-paciente">
+                <div id="infoPaciente">
+                  <p class="text-muted" style="font-style: italic">
+                    Selecione um paciente para ver as informações.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ AGENDAMENTOS ══ -->
+        <section class="pagina" id="pagina-agendamentos" style="display: none">
+          <div
+            class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+          >
+            <h3 class="mb-0">
+              <i class="bi bi-calendar3 me-2" style="color: var(--accent)"></i
+              >Agendamentos
+            </h3>
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="abrirModalNovoAgendamento()"
+            >
+              <i class="bi bi-plus-lg me-1"></i> Nova Consulta
+            </button>
+          </div>
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 table-agendamentos">
+                <thead>
+                  <tr
+                    style="
+                      font-size: 0.78rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.05em;
+                      color: var(--text-muted);
+                    "
+                  >
+                    <th>Paciente</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-agendamentos">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted py-4">
+                      Carregando...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SESSÕES ══ -->
+        <section class="pagina" id="pagina-sessoes" style="display: none">
+          <div
+            class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+          >
+            <h3 class="mb-0">
+              <i
+                class="bi bi-clipboard-heart me-2"
+                style="color: var(--accent)"
+              ></i
+              >Sessões
+            </h3>
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="abrirModalNovaSessao()"
+            >
+              <i class="bi bi-plus-lg me-1"></i> Nova Sessão
+            </button>
+          </div>
+          <div id="lista-sessoes-pacientes">
+            <p class="text-muted" style="font-style: italic">Carregando...</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════════ BOTTOM NAV (mobile) ══════════════ -->
+    <nav class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <a
+          class="bottom-nav-item ativo"
+          id="bnav-dashboard"
+          href="#"
+          onclick="mostrarPagina('dashboard')"
+        >
+          <i class="bi bi-grid-1x2"></i><span>Dashboard</span>
+        </a>
+        <a
+          class="bottom-nav-item"
+          id="bnav-pacientes"
+          href="#"
+          onclick="mostrarPagina('pacientes')"
+        >
+          <i class="bi bi-people"></i><span>Pacientes</span>
+        </a>
+        <a
+          class="bottom-nav-item"
+          id="bnav-agendamentos"
+          href="#"
+          onclick="mostrarPagina('agendamentos')"
+        >
+          <i class="bi bi-calendar3"></i><span>Agenda</span>
+        </a>
+        <a
+          class="bottom-nav-item"
+          id="bnav-sessoes"
+          href="#"
+          onclick="mostrarPagina('sessoes')"
+        >
+          <i class="bi bi-clipboard-heart"></i><span>Sessões</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+     MODAIS
+════════════════════════════════════════════ -->
+
+    <!-- Modal Paciente -->
+    <div class="modal fade" id="modalPaciente" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-paciente">
+              Cadastrar Paciente
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formPaciente" onsubmit="return false;">
+              <div class="ficha-section">
+                <div class="ficha-section-title">Dados Pessoais</div>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Nome completo *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nomePaciente"
+                      placeholder="Nome do paciente"
+                      required
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Data de Nascimento</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="nascimentoPaciente"
+                      onchange="calcularIdadeAuto()"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Idade</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="idadePaciente"
+                      min="0"
+                      max="120"
+                      placeholder="Calculada automaticamente"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Responsável</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="responsavelPaciente"
+                      placeholder="Nome do responsável"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Telefone *</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="telefonePaciente"
+                      placeholder="(00) 00000-0000"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">E-mail</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="emailPaciente"
+                      placeholder="email@exemplo.com"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="ficha-section">
+                <div class="ficha-section-title">Informações Clínicas</div>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Queixa principal</label>
+                    <textarea
+                      class="form-control"
+                      id="queixaPaciente"
+                      rows="2"
+                      placeholder="Descreva a queixa principal..."
+                    ></textarea>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Diagnóstico</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="diagnosticoPaciente"
+                      placeholder="CID ou diagnóstico"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Medicação</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="medicacaoPaciente"
+                      placeholder="Medicação em uso"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Indicado por</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="indicacaoPaciente"
+                      placeholder="Fonte de indicação"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Observações</label>
+                    <textarea
+                      class="form-control"
+                      id="obsPaciente"
+                      rows="3"
+                      placeholder="Observações adicionais..."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="salvarPaciente()"
+            >
+              <i class="bi bi-check-lg me-1"></i> Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Agendamento -->
+    <div class="modal fade" id="modalAgendamento" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-agendamento">
+              Nova Consulta
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formAgendamento" onsubmit="return false;">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Paciente *</label>
+                  <select class="form-select" id="ag-paciente">
+                    <option value="">Selecione o paciente</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Data *</label>
+                  <input type="date" class="form-control" id="ag-data" />
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Hora *</label>
+                  <input type="time" class="form-control" id="ag-hora" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Tipo</label>
+                  <select class="form-select" id="ag-tipo">
+                    <option>Consulta inicial</option>
+                    <option>Retorno</option>
+                    <option>Avaliação</option>
+                    <option>Sessão de intervenção</option>
+                    <option>Orientação a pais</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="ag-status">
+                    <option value="pendente">Pendente</option>
+                    <option value="confirmado">Confirmado</option>
+                    <option value="cancelado">Cancelado</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Observações</label>
+                  <textarea
+                    class="form-control"
+                    id="ag-obs"
+                    rows="2"
+                    placeholder="Observações..."
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btn-salvar-agendamento"
+              onclick="salvarAgendamento()"
+            >
+              <i class="bi bi-check-lg me-1"></i> Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Ver Agendamento -->
+    <div class="modal fade" id="modalVerAgendamento" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalhes da Consulta</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="ver-agendamento-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning"
+              id="btn-editar-agendamento-modal"
+            >
+              <i class="bi bi-pencil me-1"></i> Editar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sessão -->
+    <div class="modal fade" id="modalSessao" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titulo-modal-sessao">
+              Registrar Sessão
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-4">
+              <!-- Coluna esquerda: formulário -->
+              <div class="col-12 col-md-7">
+                <div class="ficha-section">
+                  <div class="ficha-section-title">Identificação</div>
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label">Paciente *</label>
+                      <select class="form-select" id="sess-paciente">
+                        <option value="">Selecione o paciente</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Data *</label>
+                      <input type="date" class="form-control" id="sess-data" />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Hora</label>
+                      <input type="time" class="form-control" id="sess-hora" />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Nº da Sessão</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="sess-numero"
+                        min="1"
+                        placeholder="Ex: 5"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Tipo</label>
+                      <select class="form-select" id="sess-tipo">
+                        <option>Avaliação inicial</option>
+                        <option>Intervenção</option>
+                        <option>Reavaliação</option>
+                        <option>Devolutiva</option>
+                        <option>Orientação</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ficha-section">
+                  <div class="ficha-section-title">Avaliações Clínicas</div>
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label class="form-label">Atenção</label>
+                      <select class="form-select" id="sess-atencao">
+                        <option value="">—</option>
+                        <option>Concentrada</option>
+                        <option>Oscilante</option>
+                        <option>Dispersa</option>
+                        <option>Aumentada</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Humor</label>
+                      <select class="form-select" id="sess-humor">
+                        <option value="">—</option>
+                        <option>Eutímico</option>
+                        <option>Ansioso</option>
+                        <option>Irritado</option>
+                        <option>Triste</option>
+                        <option>Alegre</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Participação</label>
+                      <select class="form-select" id="sess-participacao">
+                        <option value="">—</option>
+                        <option>Ativa</option>
+                        <option>Passiva</option>
+                        <option>Resistente</option>
+                        <option>Colaborativa</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Evolução</label>
+                      <select class="form-select" id="sess-evolucao">
+                        <option value="">—</option>
+                        <option>Positiva</option>
+                        <option>Estável</option>
+                        <option>Regressiva</option>
+                        <option>Inconclusiva</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ficha-section">
+                  <div class="ficha-section-title">Relato da Sessão</div>
+                  <textarea
+                    class="form-control"
+                    id="sess-relato"
+                    rows="4"
+                    placeholder="Descreva o que ocorreu durante a sessão..."
+                  ></textarea>
+                </div>
+
+                <div class="ficha-section">
+                  <div class="ficha-section-title">
+                    Plano para Próxima Sessão
+                  </div>
+                  <textarea
+                    class="form-control"
+                    id="sess-plano"
+                    rows="2"
+                    placeholder="O que será trabalhado na próxima sessão..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Coluna direita: atividades + áudio -->
+              <div class="col-12 col-md-5">
+                <div class="ficha-section">
+                  <div class="ficha-section-title">Atividades Realizadas</div>
+                  <div class="d-flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="nova-atividade"
+                      placeholder="Adicionar atividade..."
+                    />
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      onclick="adicionarAtividade()"
+                    >
+                      <i class="bi bi-plus-lg"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="d-flex flex-wrap gap-2"
+                    id="atividades-tags"
+                  ></div>
+                </div>
+
+                <div class="ficha-section">
+                  <div class="ficha-section-title">Gravação de Áudio</div>
+                  <div class="audio-recorder">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                      <button
+                        class="record-btn idle"
+                        id="btn-gravar"
+                        onclick="toggleGravacao()"
+                      >
+                        <i class="bi bi-mic-fill" id="icon-gravar"></i>
+                      </button>
+                      <div>
+                        <div class="audio-timer" id="timer-gravacao">00:00</div>
+                        <div
+                          style="font-size: 0.78rem; color: var(--text-muted)"
+                          id="status-gravacao"
+                        >
+                          Pronto para gravar
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="alert alert-danger py-2 px-3"
+                      id="erro-audio"
+                      style="display: none; font-size: 0.82rem"
+                    >
+                      <i class="bi bi-exclamation-triangle me-1"></i> Permita o
+                      acesso ao microfone nas configurações do navegador.
+                    </div>
+                    <div id="lista-audios"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="salvarSessao()"
+            >
+              <i class="bi bi-check-lg me-1"></i> Salvar Sessão
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Ver Sessão -->
+    <div class="modal fade" id="modalVerSessao" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalhes da Sessão</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="ver-sessao-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              id="btn-excluir-sessao-modal"
+            >
+              <i class="bi bi-trash me-1"></i> Excluir
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning"
+              id="btn-editar-sessao-modal"
+            >
+              <i class="bi bi-pencil me-1"></i> Editar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 9999"
+    >
+      <div
+        id="app-toast"
+        class="toast align-items-center text-white border-0"
+        role="alert"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="toast-msg"></div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
